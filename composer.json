@@ -1,0 +1,29 @@
+{
+    "name": "ocramius/ocra-lorem-module",
+    "description": "Module that provides Lorem Generator utilities for ZendFramework 2 Applications",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "lorem",
+        "ipsum",
+        "zf2"
+    ],
+    "homepage": "http://ocramius.github.com/",
+    "authors": [
+        {
+            "name": "Marco Pivetta",
+            "email": "ocramius@gmail.com",
+            "homepage": "http://marco-pivetta.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "dev-master"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "OcraLoremModule": "src/"
+        }
+    }
+}
