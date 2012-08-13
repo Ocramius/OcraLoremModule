@@ -18,9 +18,9 @@
 
 namespace OcraLoremModule\View\Helper;
 
-use OcraLoremModule\LoremIpsumGenerator;
 use Zend\View\Helper\AbstractHelper;
 use Zend\Escaper\Escaper;
+use InvalidArgumentException;
 
 /**
  * Helper to be used to produce lorem pixum IMG html tag
@@ -37,11 +37,24 @@ class LoremPixel extends AbstractHelper
      */
     protected $escaper;
 
+    /**
+     * @param Escaper $escaper
+     */
     public function __construct(Escaper $escaper)
     {
         $this->escaper = $escaper;
     }
 
+    /**
+     * @param int $width
+     * @param int $height
+     * @param bool $color
+     * @param string|null $category
+     * @param string|null $imageText
+     * @param int|null $categoryIndex
+     * @return string
+     * @throws InvalidArgumentException
+     */
     public function __invoke(
         $width = 640,
         $height = 480,
@@ -51,7 +64,7 @@ class LoremPixel extends AbstractHelper
         $categoryIndex = null
     ) {
         if (!((int) $width && (int) $height)) {
-            throw new \InvalidArgumentException('Both width and height must be defined');
+            throw new InvalidArgumentException('Both width and height must be defined');
         }
 
         $src = static::BASE_URL;
@@ -77,7 +90,7 @@ class LoremPixel extends AbstractHelper
         return '<img src="'
             . $this->escaper->escapeHtmlAttr($src)
             . '" alt="'
-            . $this->escaper->escapeHtml($imageText ? $imageText : 'Lorem Pixel')
+            . $this->escaper->escapeHtmlAttr($imageText ? $imageText : 'Lorem Pixel')
             . '"/>';
     }
 }
