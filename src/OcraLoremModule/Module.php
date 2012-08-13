@@ -20,8 +20,11 @@ namespace OcraLoremModule;
 
 use Zend\Loader\StandardAutoloader;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 use Zend\EventManager\Event;
+
+use Zend\Escaper\Escaper;
+use OcraLoremModule\View\Helper\LoremPixel;
 
 /**
  * Module that provides Lorem Generator utilities for ZendFramework 2 Applications
@@ -29,7 +32,7 @@ use Zend\EventManager\Event;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class Module implements AutoloaderProviderInterface, ConfigProviderInterface
+class Module implements AutoloaderProviderInterface, ViewHelperProviderInterface
 {
     /**
      * {@inheritDoc}
@@ -40,7 +43,6 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
             'Zend\Loader\StandardAutoloader' => array(
                 StandardAutoloader::LOAD_NS => array(
                     __NAMESPACE__ => __DIR__,
-                    __NAMESPACE__ . 'Test' => __DIR__ . '/../../../../tests/Comcom/CMS/ContentTest',
                 ),
             ),
         );
@@ -49,8 +51,18 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
     /**
      * {@inheritDoc}
      */
-    public function getConfig()
+    public function getViewHelperConfig()
     {
-        return require __DIR__ . '/../../config/module.config.php';
+        return array(
+            'invokables' => array(
+                'lorem' => 'OcraLoremModule\View\Helper\Lorem',
+            ),
+            'factories' => array(
+                'lorem_pixel' => function()
+                {
+                    return new LoremPixel(new Escaper());
+                },
+            ),
+        );
     }
 }
