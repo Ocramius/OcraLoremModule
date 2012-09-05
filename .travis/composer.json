@@ -1,7 +1,6 @@
 {
     "minimum-stability": "dev",
     "require": {
-        "ocramius/ocra-lorem-module": "dev-master",
-        "zendframework/zendframework": "dev-master"
+        "ocramius/ocra-lorem-module": "dev-master"
     }
 }
